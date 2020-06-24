@@ -6,11 +6,11 @@ package com.mojang.brigadier.arguments;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-
 import java.util.Arrays;
 import java.util.Collection;
 
 public class IntegerArgumentType implements ArgumentType<Integer> {
+
     private static final Collection<String> EXAMPLES = Arrays.asList("0", "123", "-123");
 
     private final int minimum;
@@ -62,8 +62,12 @@ public class IntegerArgumentType implements ArgumentType<Integer> {
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (!(o instanceof IntegerArgumentType)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof IntegerArgumentType)) {
+            return false;
+        }
 
         final IntegerArgumentType that = (IntegerArgumentType) o;
         return maximum == that.maximum && minimum == that.minimum;

@@ -4,7 +4,6 @@
 package com.mojang.brigadier.suggestion;
 
 import com.mojang.brigadier.context.StringRange;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -14,6 +13,7 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class Suggestions {
+
     private static final Suggestions EMPTY = new Suggestions(StringRange.at(0), new ArrayList<>());
 
     private final StringRange range;
@@ -22,6 +22,44 @@ public class Suggestions {
     public Suggestions(final StringRange range, final List<Suggestion> suggestions) {
         this.range = range;
         this.suggestions = suggestions;
+    }
+
+    public static CompletableFuture<Suggestions> empty() {
+        return CompletableFuture.completedFuture(EMPTY);
+    }
+
+    public static Suggestions merge(final String command, final Collection<Suggestions> input) {
+        if (input.isEmpty()) {
+            return EMPTY;
+        } else if (input.size() == 1) {
+            return input.iterator().next();
+        }
+
+        final Set<Suggestion> texts = new HashSet<>();
+        for (final Suggestions suggestions : input) {
+            texts.addAll(suggestions.getList());
+        }
+        return create(command, texts);
+    }
+
+    public static Suggestions create(final String command, final Collection<Suggestion> suggestions) {
+        if (suggestions.isEmpty()) {
+            return EMPTY;
+        }
+        int start = Integer.MAX_VALUE;
+        int end = Integer.MIN_VALUE;
+        for (final Suggestion suggestion : suggestions) {
+            start = Math.min(suggestion.getRange().getStart(), start);
+            end = Math.max(suggestion.getRange().getEnd(), end);
+        }
+        final StringRange range = new StringRange(start, end);
+        final Set<Suggestion> texts = new HashSet<>();
+        for (final Suggestion suggestion : suggestions) {
+            texts.add(suggestion.expand(command, range));
+        }
+        final List<Suggestion> sorted = new ArrayList<>(texts);
+        sorted.sort(Suggestion::compareToIgnoreCase);
+        return new Suggestions(range, sorted);
     }
 
     public StringRange getRange() {
@@ -60,43 +98,5 @@ public class Suggestions {
             "range=" + range +
             ", suggestions=" + suggestions +
             '}';
-    }
-
-    public static CompletableFuture<Suggestions> empty() {
-        return CompletableFuture.completedFuture(EMPTY);
-    }
-
-    public static Suggestions merge(final String command, final Collection<Suggestions> input) {
-        if (input.isEmpty()) {
-            return EMPTY;
-        } else if (input.size() == 1) {
-            return input.iterator().next();
-        }
-
-        final Set<Suggestion> texts = new HashSet<>();
-        for (final Suggestions suggestions : input) {
-            texts.addAll(suggestions.getList());
-        }
-        return create(command, texts);
-    }
-
-    public static Suggestions create(final String command, final Collection<Suggestion> suggestions) {
-        if (suggestions.isEmpty()) {
-            return EMPTY;
-        }
-        int start = Integer.MAX_VALUE;
-        int end = Integer.MIN_VALUE;
-        for (final Suggestion suggestion : suggestions) {
-            start = Math.min(suggestion.getRange().getStart(), start);
-            end = Math.max(suggestion.getRange().getEnd(), end);
-        }
-        final StringRange range = new StringRange(start, end);
-        final Set<Suggestion> texts = new HashSet<>();
-        for (final Suggestion suggestion : suggestions) {
-            texts.add(suggestion.expand(command, range));
-        }
-        final List<Suggestion> sorted = new ArrayList<>(texts);
-        sorted.sort((a, b) -> a.compareToIgnoreCase(b));
-        return new Suggestions(range, sorted);
     }
 }

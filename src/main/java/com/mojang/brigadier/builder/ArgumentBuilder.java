@@ -8,12 +8,12 @@ import com.mojang.brigadier.RedirectModifier;
 import com.mojang.brigadier.SingleRedirectModifier;
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.RootCommandNode;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.function.Predicate;
 
 public abstract class ArgumentBuilder<S, T extends ArgumentBuilder<S, T>> {
+
     private final RootCommandNode<S> arguments = new RootCommandNode<>();
     private Command<S> command;
     private Predicate<S> requirement = s -> true;

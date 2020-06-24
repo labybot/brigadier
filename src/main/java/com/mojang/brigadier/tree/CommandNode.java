@@ -13,28 +13,30 @@ import com.mojang.brigadier.context.CommandContextBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public abstract class CommandNode<S> implements Comparable<CommandNode<S>> {
-    private Map<String, CommandNode<S>> children = new LinkedHashMap<>();
-    private Map<String, LiteralCommandNode<S>> literals = new LinkedHashMap<>();
-    private Map<String, ArgumentCommandNode<S, ?>> arguments = new LinkedHashMap<>();
+
+    private final Map<String, LiteralCommandNode<S>> literals = new LinkedHashMap<>();
+    private final Map<String, ArgumentCommandNode<S, ?>> arguments = new LinkedHashMap<>();
     private final Predicate<S> requirement;
     private final CommandNode<S> redirect;
     private final RedirectModifier<S> modifier;
     private final boolean forks;
+    private Map<String, CommandNode<S>> children = new LinkedHashMap<>();
     private Command<S> command;
 
-    protected CommandNode(final Command<S> command, final Predicate<S> requirement, final CommandNode<S> redirect, final RedirectModifier<S> modifier, final boolean forks) {
+    protected CommandNode(final Command<S> command, final Predicate<S> requirement, final CommandNode<S> redirect, final RedirectModifier<S> modifier,
+        final boolean forks) {
         this.command = command;
         this.requirement = requirement;
         this.redirect = redirect;
@@ -89,7 +91,8 @@ public abstract class CommandNode<S> implements Comparable<CommandNode<S>> {
             }
         }
 
-        children = children.entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+        children = children.entrySet().stream().sorted(Map.Entry.comparingByValue())
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
     }
 
     public void findAmbiguities(final AmbiguityConsumer<S> consumer) {
@@ -121,15 +124,19 @@ public abstract class CommandNode<S> implements Comparable<CommandNode<S>> {
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CommandNode)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof CommandNode)) {
+            return false;
+        }
 
         final CommandNode<S> that = (CommandNode<S>) o;
 
-        if (!children.equals(that.children)) return false;
-        if (command != null ? !command.equals(that.command) : that.command != null) return false;
-
-        return true;
+        if (!children.equals(that.children)) {
+            return false;
+        }
+        return Objects.equals(command, that.command);
     }
 
     @Override
@@ -147,7 +154,8 @@ public abstract class CommandNode<S> implements Comparable<CommandNode<S>> {
 
     public abstract void parse(StringReader reader, CommandContextBuilder<S> contextBuilder) throws CommandSyntaxException;
 
-    public abstract CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) throws CommandSyntaxException;
+    public abstract CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder)
+        throws CommandSyntaxException;
 
     public abstract ArgumentBuilder<S, ?> createBuilder();
 

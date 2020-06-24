@@ -6,10 +6,10 @@ package com.mojang.brigadier.context;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.RedirectModifier;
 import com.mojang.brigadier.tree.CommandNode;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class CommandContext<S> {
 
@@ -37,7 +37,9 @@ public class CommandContext<S> {
     private final RedirectModifier<S> modifier;
     private final boolean forks;
 
-    public CommandContext(final S source, final String input, final Map<String, ParsedArgument<S, ?>> arguments, final Command<S> command, final CommandNode<S> rootNode, final List<ParsedCommandNode<S>> nodes, final StringRange range, final CommandContext<S> child, final RedirectModifier<S> modifier, boolean forks) {
+    public CommandContext(final S source, final String input, final Map<String, ParsedArgument<S, ?>> arguments, final Command<S> command,
+        final CommandNode<S> rootNode, final List<ParsedCommandNode<S>> nodes, final StringRange range, final CommandContext<S> child,
+        final RedirectModifier<S> modifier, boolean forks) {
         this.source = source;
         this.input = input;
         this.arguments = arguments;
@@ -95,19 +97,31 @@ public class CommandContext<S> {
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CommandContext)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof CommandContext)) {
+            return false;
+        }
 
-        final CommandContext that = (CommandContext) o;
+        final CommandContext<?> that = (CommandContext<?>) o;
 
-        if (!arguments.equals(that.arguments)) return false;
-        if (!rootNode.equals(that.rootNode)) return false;
-        if (nodes.size() != that.nodes.size() || !nodes.equals(that.nodes)) return false;
-        if (command != null ? !command.equals(that.command) : that.command != null) return false;
-        if (!source.equals(that.source)) return false;
-        if (child != null ? !child.equals(that.child) : that.child != null) return false;
-
-        return true;
+        if (!arguments.equals(that.arguments)) {
+            return false;
+        }
+        if (!rootNode.equals(that.rootNode)) {
+            return false;
+        }
+        if (nodes.size() != that.nodes.size() || !nodes.equals(that.nodes)) {
+            return false;
+        }
+        if (!Objects.equals(command, that.command)) {
+            return false;
+        }
+        if (!source.equals(that.source)) {
+            return false;
+        }
+        return Objects.equals(child, that.child);
     }
 
     @Override

@@ -6,6 +6,7 @@ package com.mojang.brigadier.context;
 import java.util.Objects;
 
 public class ParsedArgument<S, T> {
+
     private final StringRange range;
     private final T result;
 

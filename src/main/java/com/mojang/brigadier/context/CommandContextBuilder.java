@@ -7,13 +7,13 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.RedirectModifier;
 import com.mojang.brigadier.tree.CommandNode;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class CommandContextBuilder<S> {
+
     private final Map<String, ParsedArgument<S, ?>> arguments = new LinkedHashMap<>();
     private final CommandNode<S> rootNode;
     private final List<ParsedCommandNode<S>> nodes = new ArrayList<>();
@@ -104,7 +104,8 @@ public class CommandContextBuilder<S> {
     }
 
     public CommandContext<S> build(final String input) {
-        return new CommandContext<>(source, input, arguments, command, rootNode, nodes, range, child == null ? null : child.build(input), modifier, forks);
+        return new CommandContext<>(source, input, arguments, command, rootNode, nodes, range, child == null ? null : child.build(input), modifier,
+            forks);
     }
 
     public CommandDispatcher<S> getDispatcher() {

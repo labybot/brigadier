@@ -7,6 +7,7 @@ import com.mojang.brigadier.ImmutableStringReader;
 import com.mojang.brigadier.Message;
 
 public class SimpleCommandExceptionType implements CommandExceptionType {
+
     private final Message message;
 
     public SimpleCommandExceptionType(final Message message) {

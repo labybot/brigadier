@@ -13,7 +13,6 @@ import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.mojang.brigadier.tree.RootCommandNode;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -33,6 +32,7 @@ import java.util.stream.Collectors;
  * @param <S> a custom "source" type, such as a user or originator of a command
  */
 public class CommandDispatcher<S> {
+
     /**
      * The string required to separate individual arguments in an input string
      *
@@ -114,24 +114,25 @@ public class CommandDispatcher<S> {
      *
      * <p>It is recommended to parse and execute as separate steps, as parsing is often the most expensive step, and easiest to cache.</p>
      *
-     * <p>If this command returns a value, then it successfully executed something. If it could not parse the command, or the execution was a failure,
-     * then an exception will be thrown. Most exceptions will be of type {@link CommandSyntaxException}, but it is possible that a {@link RuntimeException}
-     * may bubble up from the result of a command. The meaning behind the returned result is arbitrary, and will depend
-     * entirely on what command was performed.</p>
+     * <p>If this command returns a value, then it successfully executed something. If it could not parse the command, or the execution was a
+     * failure,
+     * then an exception will be thrown. Most exceptions will be of type {@link CommandSyntaxException}, but it is possible that a {@link
+     * RuntimeException} may bubble up from the result of a command. The meaning behind the returned result is arbitrary, and will depend entirely on
+     * what command was performed.</p>
      *
      * <p>If the command passes through a node that is {@link CommandNode#isFork()} then it will be 'forked'.
-     * A forked command will not bubble up any {@link CommandSyntaxException}s, and the 'result' returned will turn into
-     * 'amount of successful commands executes'.</p>
+     * A forked command will not bubble up any {@link CommandSyntaxException}s, and the 'result' returned will turn into 'amount of successful
+     * commands executes'.</p>
      *
      * <p>After each and any command is ran, a registered callback given to {@link #setConsumer(ResultConsumer)}
-     * will be notified of the result and success of the command. You can use that method to gather more meaningful
-     * results than this method will return, especially when a command forks.</p>
+     * will be notified of the result and success of the command. You can use that method to gather more meaningful results than this method will
+     * return, especially when a command forks.</p>
      *
-     * @param input a command string to parse &amp; execute
+     * @param input  a command string to parse &amp; execute
      * @param source a custom "source" object, usually representing the originator of this command
      * @return a numeric result from a "command" that was performed
      * @throws CommandSyntaxException if the command failed to parse or execute
-     * @throws RuntimeException if the command failed to execute and was not handled gracefully
+     * @throws RuntimeException       if the command failed to execute and was not handled gracefully
      * @see #parse(String, Object)
      * @see #parse(StringReader, Object)
      * @see #execute(ParseResults)
@@ -148,24 +149,25 @@ public class CommandDispatcher<S> {
      *
      * <p>It is recommended to parse and execute as separate steps, as parsing is often the most expensive step, and easiest to cache.</p>
      *
-     * <p>If this command returns a value, then it successfully executed something. If it could not parse the command, or the execution was a failure,
-     * then an exception will be thrown. Most exceptions will be of type {@link CommandSyntaxException}, but it is possible that a {@link RuntimeException}
-     * may bubble up from the result of a command. The meaning behind the returned result is arbitrary, and will depend
-     * entirely on what command was performed.</p>
+     * <p>If this command returns a value, then it successfully executed something. If it could not parse the command, or the execution was a
+     * failure,
+     * then an exception will be thrown. Most exceptions will be of type {@link CommandSyntaxException}, but it is possible that a {@link
+     * RuntimeException} may bubble up from the result of a command. The meaning behind the returned result is arbitrary, and will depend entirely on
+     * what command was performed.</p>
      *
      * <p>If the command passes through a node that is {@link CommandNode#isFork()} then it will be 'forked'.
-     * A forked command will not bubble up any {@link CommandSyntaxException}s, and the 'result' returned will turn into
-     * 'amount of successful commands executes'.</p>
+     * A forked command will not bubble up any {@link CommandSyntaxException}s, and the 'result' returned will turn into 'amount of successful
+     * commands executes'.</p>
      *
      * <p>After each and any command is ran, a registered callback given to {@link #setConsumer(ResultConsumer)}
-     * will be notified of the result and success of the command. You can use that method to gather more meaningful
-     * results than this method will return, especially when a command forks.</p>
+     * will be notified of the result and success of the command. You can use that method to gather more meaningful results than this method will
+     * return, especially when a command forks.</p>
      *
-     * @param input a command string to parse &amp; execute
+     * @param input  a command string to parse &amp; execute
      * @param source a custom "source" object, usually representing the originator of this command
      * @return a numeric result from a "command" that was performed
      * @throws CommandSyntaxException if the command failed to parse or execute
-     * @throws RuntimeException if the command failed to execute and was not handled gracefully
+     * @throws RuntimeException       if the command failed to execute and was not handled gracefully
      * @see #parse(String, Object)
      * @see #parse(StringReader, Object)
      * @see #execute(ParseResults)
@@ -180,23 +182,22 @@ public class CommandDispatcher<S> {
      * Executes a given pre-parsed command.
      *
      * <p>If this command returns a value, then it successfully executed something. If the execution was a failure,
-     * then an exception will be thrown.
-     * Most exceptions will be of type {@link CommandSyntaxException}, but it is possible that a {@link RuntimeException}
-     * may bubble up from the result of a command. The meaning behind the returned result is arbitrary, and will depend
-     * entirely on what command was performed.</p>
+     * then an exception will be thrown. Most exceptions will be of type {@link CommandSyntaxException}, but it is possible that a {@link
+     * RuntimeException} may bubble up from the result of a command. The meaning behind the returned result is arbitrary, and will depend entirely on
+     * what command was performed.</p>
      *
      * <p>If the command passes through a node that is {@link CommandNode#isFork()} then it will be 'forked'.
-     * A forked command will not bubble up any {@link CommandSyntaxException}s, and the 'result' returned will turn into
-     * 'amount of successful commands executes'.</p>
+     * A forked command will not bubble up any {@link CommandSyntaxException}s, and the 'result' returned will turn into 'amount of successful
+     * commands executes'.</p>
      *
      * <p>After each and any command is ran, a registered callback given to {@link #setConsumer(ResultConsumer)}
-     * will be notified of the result and success of the command. You can use that method to gather more meaningful
-     * results than this method will return, especially when a command forks.</p>
+     * will be notified of the result and success of the command. You can use that method to gather more meaningful results than this method will
+     * return, especially when a command forks.</p>
      *
      * @param parse the result of a successful {@link #parse(StringReader, Object)}
      * @return a numeric result from a "command" that was performed.
      * @throws CommandSyntaxException if the command failed to parse or execute
-     * @throws RuntimeException if the command failed to execute and was not handled gracefully
+     * @throws RuntimeException       if the command failed to execute and was not handled gracefully
      * @see #parse(String, Object)
      * @see #parse(StringReader, Object)
      * @see #execute(String, Object)
@@ -223,9 +224,7 @@ public class CommandDispatcher<S> {
         ArrayList<CommandContext<S>> next = null;
 
         while (contexts != null) {
-            final int size = contexts.size();
-            for (int i = 0; i < size; i++) {
-                final CommandContext<S> context = contexts.get(i);
+            for (final CommandContext<S> context : contexts) {
                 final CommandContext<S> child = context.getChild();
                 if (child != null) {
                     forked |= context.isForked();
@@ -294,18 +293,17 @@ public class CommandDispatcher<S> {
      * Forked contexts may contain child contexts, which may be modified by the {@link RedirectModifier} attached to the fork.</p>
      *
      * <p>Parsing a command can never fail, you will always be provided with a new {@link ParseResults}.
-     * However, that does not mean that it will always parse into a valid command. You should inspect the returned results
-     * to check for validity. If its {@link ParseResults#getReader()} {@link StringReader#canRead()} then it did not finish
-     * parsing successfully. You can use that position as an indicator to the user where the command stopped being valid.
-     * You may inspect {@link ParseResults#getExceptions()} if you know the parse failed, as it will explain why it could
-     * not find any valid commands. It may contain multiple exceptions, one for each "potential node" that it could have visited,
-     * explaining why it did not go down that node.</p>
+     * However, that does not mean that it will always parse into a valid command. You should inspect the returned results to check for validity. If
+     * its {@link ParseResults#getReader()} {@link StringReader#canRead()} then it did not finish parsing successfully. You can use that position as
+     * an indicator to the user where the command stopped being valid. You may inspect {@link ParseResults#getExceptions()} if you know the parse
+     * failed, as it will explain why it could not find any valid commands. It may contain multiple exceptions, one for each "potential node" that it
+     * could have visited, explaining why it did not go down that node.</p>
      *
      * <p>When you eventually call {@link #execute(ParseResults)} with the result of this method, the above error checking
      * will occur. You only need to inspect it yourself if you wish to handle that yourself.</p>
      *
      * @param command a command string to parse
-     * @param source a custom "source" object, usually representing the originator of this command
+     * @param source  a custom "source" object, usually representing the originator of this command
      * @return the result of parsing this command
      * @see #parse(StringReader, Object)
      * @see #execute(ParseResults)
@@ -325,18 +323,17 @@ public class CommandDispatcher<S> {
      * Forked contexts may contain child contexts, which may be modified by the {@link RedirectModifier} attached to the fork.</p>
      *
      * <p>Parsing a command can never fail, you will always be provided with a new {@link ParseResults}.
-     * However, that does not mean that it will always parse into a valid command. You should inspect the returned results
-     * to check for validity. If its {@link ParseResults#getReader()} {@link StringReader#canRead()} then it did not finish
-     * parsing successfully. You can use that position as an indicator to the user where the command stopped being valid.
-     * You may inspect {@link ParseResults#getExceptions()} if you know the parse failed, as it will explain why it could
-     * not find any valid commands. It may contain multiple exceptions, one for each "potential node" that it could have visited,
-     * explaining why it did not go down that node.</p>
+     * However, that does not mean that it will always parse into a valid command. You should inspect the returned results to check for validity. If
+     * its {@link ParseResults#getReader()} {@link StringReader#canRead()} then it did not finish parsing successfully. You can use that position as
+     * an indicator to the user where the command stopped being valid. You may inspect {@link ParseResults#getExceptions()} if you know the parse
+     * failed, as it will explain why it could not find any valid commands. It may contain multiple exceptions, one for each "potential node" that it
+     * could have visited, explaining why it did not go down that node.</p>
      *
      * <p>When you eventually call {@link #execute(ParseResults)} with the result of this method, the above error checking
      * will occur. You only need to inspect it yourself if you wish to handle that yourself.</p>
      *
      * @param command a command string to parse
-     * @param source a custom "source" object, usually representing the originator of this command
+     * @param source  a custom "source" object, usually representing the originator of this command
      * @return the result of parsing this command
      * @see #parse(String, Object)
      * @see #execute(ParseResults)
@@ -432,8 +429,8 @@ public class CommandDispatcher<S> {
      * <p>You may use {@link #getRoot()} as a target to get all usage data for the entire command tree.</p>
      *
      * <p>The returned syntax will be in "simple" form: {@code <param>} and {@code literal}. "Optional" nodes will be
-     * listed as multiple entries: the parent node, and the child nodes.
-     * For example, a required literal "foo" followed by an optional param "int" will be two nodes:</p>
+     * listed as multiple entries: the parent node, and the child nodes. For example, a required literal "foo" followed by an optional param "int"
+     * will be two nodes:</p>
      * <ul>
      *     <li>{@code foo}</li>
      *     <li>{@code foo <int>}</li>
@@ -442,18 +439,19 @@ public class CommandDispatcher<S> {
      * <p>The path to the specified node will <b>not</b> be prepended to the output, as there can theoretically be many
      * ways to reach a given node. It will only give you paths relative to the specified node, not absolute from root.</p>
      *
-     * @param node target node to get child usage strings for
-     * @param source a custom "source" object, usually representing the originator of this command
+     * @param node       target node to get child usage strings for
+     * @param source     a custom "source" object, usually representing the originator of this command
      * @param restricted if true, commands that the {@code source} cannot access will not be mentioned
      * @return array of full usage strings under the target node
      */
     public String[] getAllUsage(final CommandNode<S> node, final S source, final boolean restricted) {
         final ArrayList<String> result = new ArrayList<>();
         getAllUsage(node, source, result, "", restricted);
-        return result.toArray(new String[result.size()]);
+        return result.toArray(new String[0]);
     }
 
-    private void getAllUsage(final CommandNode<S> node, final S source, final ArrayList<String> result, final String prefix, final boolean restricted) {
+    private void getAllUsage(final CommandNode<S> node, final S source, final ArrayList<String> result, final String prefix,
+        final boolean restricted) {
         if (restricted && !node.canUse(source)) {
             return;
         }
@@ -467,7 +465,8 @@ public class CommandDispatcher<S> {
             result.add(prefix.isEmpty() ? node.getUsageText() + ARGUMENT_SEPARATOR + redirect : prefix + ARGUMENT_SEPARATOR + redirect);
         } else if (!node.getChildren().isEmpty()) {
             for (final CommandNode<S> child : node.getChildren()) {
-                getAllUsage(child, source, result, prefix.isEmpty() ? child.getUsageText() : prefix + ARGUMENT_SEPARATOR + child.getUsageText(), restricted);
+                getAllUsage(child, source, result, prefix.isEmpty() ? child.getUsageText() : prefix + ARGUMENT_SEPARATOR + child.getUsageText(),
+                    restricted);
             }
         }
     }
@@ -478,8 +477,8 @@ public class CommandDispatcher<S> {
      * <p>You may use {@link #getRoot()} as a target to get usage data for the entire command tree.</p>
      *
      * <p>The returned syntax will be in "smart" form: {@code <param>}, {@code literal}, {@code [optional]} and {@code (either|or)}.
-     * These forms may be mixed and matched to provide as much information about the child nodes as it can, without being too verbose.
-     * For example, a required literal "foo" followed by an optional param "int" can be compressed into one string:</p>
+     * These forms may be mixed and matched to provide as much information about the child nodes as it can, without being too verbose. For example, a
+     * required literal "foo" followed by an optional param "int" can be compressed into one string:</p>
      * <ul>
      *     <li>{@code foo [<int>]}</li>
      * </ul>
@@ -489,7 +488,7 @@ public class CommandDispatcher<S> {
      *
      * <p>The returned usage will be restricted to only commands that the provided {@code source} can use.</p>
      *
-     * @param node target node to get child usage strings for
+     * @param node   target node to get child usage strings for
      * @param source a custom "source" object, usually representing the originator of this command
      * @return array of full usage strings under the target node
      */
@@ -564,13 +563,12 @@ public class CommandDispatcher<S> {
      * Gets suggestions for a parsed input string on what comes next.
      *
      * <p>As it is ultimately up to custom argument types to provide suggestions, it may be an asynchronous operation,
-     * for example getting in-game data or player names etc. As such, this method returns a future and no guarantees
-     * are made to when or how the future completes.</p>
+     * for example getting in-game data or player names etc. As such, this method returns a future and no guarantees are made to when or how the
+     * future completes.</p>
      *
      * <p>The suggestions provided will be in the context of the end of the parsed input string, but may suggest
-     * new or replacement strings for earlier in the input string. For example, if the end of the string was
-     * {@code foobar} but an argument preferred it to be {@code minecraft:foobar}, it will suggest a replacement for that
-     * whole segment of the input.</p>
+     * new or replacement strings for earlier in the input string. For example, if the end of the string was {@code foobar} but an argument preferred
+     * it to be {@code minecraft:foobar}, it will suggest a replacement for that whole segment of the input.</p>
      *
      * @param parse the result of a {@link #parse(StringReader, Object)}
      * @return a future that will eventually resolve into a {@link Suggestions} object
@@ -615,8 +613,8 @@ public class CommandDispatcher<S> {
      * Gets the root of this command tree.
      *
      * <p>This is often useful as a target of a {@link com.mojang.brigadier.builder.ArgumentBuilder#redirect(CommandNode)},
-     * {@link #getAllUsage(CommandNode, Object, boolean)} or {@link #getSmartUsage(CommandNode, Object)}.
-     * You may also use it to clone the command tree via {@link #CommandDispatcher(RootCommandNode)}.</p>
+     * {@link #getAllUsage(CommandNode, Object, boolean)} or {@link #getSmartUsage(CommandNode, Object)}. You may also use it to clone the command
+     * tree via {@link #CommandDispatcher(RootCommandNode)}.</p>
      *
      * @return root of the command tree
      */
@@ -628,12 +626,12 @@ public class CommandDispatcher<S> {
      * Finds a valid path to a given node on the command tree.
      *
      * <p>There may theoretically be multiple paths to a node on the tree, especially with the use of forking or redirecting.
-     * As such, this method makes no guarantees about which path it finds. It will not look at forks or redirects,
-     * and find the first instance of the target node on the tree.</p>
+     * As such, this method makes no guarantees about which path it finds. It will not look at forks or redirects, and find the first instance of the
+     * target node on the tree.</p>
      *
      * <p>The only guarantee made is that for the same command tree and the same version of this library, the result of
-     * this method will <b>always</b> be a valid input for {@link #findNode(Collection)}, which should return the same node
-     * as provided to this method.</p>
+     * this method will <b>always</b> be a valid input for {@link #findNode(Collection)}, which should return the same node as provided to this
+     * method.</p>
      *
      * @param target the target node you are finding a path for
      * @return a path to the resulting node, or an empty list if it was not found

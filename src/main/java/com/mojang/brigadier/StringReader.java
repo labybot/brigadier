@@ -6,6 +6,7 @@ package com.mojang.brigadier;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 public class StringReader implements ImmutableStringReader {
+
     private static final char SYNTAX_ESCAPE = '\\';
     private static final char SYNTAX_DOUBLE_QUOTE = '"';
     private static final char SYNTAX_SINGLE_QUOTE = '\'';
@@ -22,13 +23,25 @@ public class StringReader implements ImmutableStringReader {
         this.string = string;
     }
 
+    public static boolean isAllowedNumber(final char c) {
+        return c >= '0' && c <= '9' || c == '.' || c == '-';
+    }
+
+    public static boolean isQuotedStringStart(char c) {
+        return c == SYNTAX_DOUBLE_QUOTE || c == SYNTAX_SINGLE_QUOTE;
+    }
+
+    public static boolean isAllowedInUnquotedString(final char c) {
+        return c >= '0' && c <= '9'
+            || c >= 'A' && c <= 'Z'
+            || c >= 'a' && c <= 'z'
+            || c == '_' || c == '-'
+            || c == '.' || c == '+';
+    }
+
     @Override
     public String getString() {
         return string;
-    }
-
-    public void setCursor(final int cursor) {
-        this.cursor = cursor;
     }
 
     @Override
@@ -44,6 +57,10 @@ public class StringReader implements ImmutableStringReader {
     @Override
     public int getCursor() {
         return cursor;
+    }
+
+    public void setCursor(final int cursor) {
+        this.cursor = cursor;
     }
 
     @Override
@@ -82,14 +99,6 @@ public class StringReader implements ImmutableStringReader {
 
     public void skip() {
         cursor++;
-    }
-
-    public static boolean isAllowedNumber(final char c) {
-        return c >= '0' && c <= '9' || c == '.' || c == '-';
-    }
-
-    public static boolean isQuotedStringStart(char c) {
-        return c == SYNTAX_DOUBLE_QUOTE || c == SYNTAX_SINGLE_QUOTE;
     }
 
     public void skipWhitespace() {
@@ -164,14 +173,6 @@ public class StringReader implements ImmutableStringReader {
             cursor = start;
             throw CommandSyntaxException.BUILT_IN_EXCEPTIONS.readerInvalidFloat().createWithContext(this, number);
         }
-    }
-
-    public static boolean isAllowedInUnquotedString(final char c) {
-        return c >= '0' && c <= '9'
-            || c >= 'A' && c <= 'Z'
-            || c >= 'a' && c <= 'z'
-            || c == '_' || c == '-'
-            || c == '.' || c == '+';
     }
 
     public String readUnquotedString() {

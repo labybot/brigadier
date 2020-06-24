@@ -4,7 +4,6 @@
 package com.mojang.brigadier.context;
 
 import com.mojang.brigadier.tree.CommandNode;
-
 import java.util.Objects;
 
 public class ParsedCommandNode<S> {
@@ -33,11 +32,15 @@ public class ParsedCommandNode<S> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         ParsedCommandNode<?> that = (ParsedCommandNode<?>) o;
         return Objects.equals(node, that.node) &&
-                Objects.equals(range, that.range);
+            Objects.equals(range, that.range);
     }
 
     @Override

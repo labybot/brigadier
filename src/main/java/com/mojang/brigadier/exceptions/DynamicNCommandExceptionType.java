@@ -7,6 +7,7 @@ import com.mojang.brigadier.ImmutableStringReader;
 import com.mojang.brigadier.Message;
 
 public class DynamicNCommandExceptionType implements CommandExceptionType {
+
     private final Function function;
 
     public DynamicNCommandExceptionType(final Function function) {
@@ -22,6 +23,7 @@ public class DynamicNCommandExceptionType implements CommandExceptionType {
     }
 
     public interface Function {
+
         Message apply(Object[] args);
     }
 }

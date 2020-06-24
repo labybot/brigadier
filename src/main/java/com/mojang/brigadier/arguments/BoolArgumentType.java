@@ -8,12 +8,12 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 
 public class BoolArgumentType implements ArgumentType<Boolean> {
+
     private static final Collection<String> EXAMPLES = Arrays.asList("true", "false");
 
     private BoolArgumentType() {

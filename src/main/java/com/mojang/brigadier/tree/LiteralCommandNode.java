@@ -13,16 +13,17 @@ import com.mojang.brigadier.context.StringRange;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
 
 public class LiteralCommandNode<S> extends CommandNode<S> {
+
     private final String literal;
 
-    public LiteralCommandNode(final String literal, final Command<S> command, final Predicate<S> requirement, final CommandNode<S> redirect, final RedirectModifier<S> modifier, final boolean forks) {
+    public LiteralCommandNode(final String literal, final Command<S> command, final Predicate<S> requirement, final CommandNode<S> redirect,
+        final RedirectModifier<S> modifier, final boolean forks) {
         super(command, requirement, redirect, modifier, forks);
         this.literal = literal;
     }
@@ -80,12 +81,18 @@ public class LiteralCommandNode<S> extends CommandNode<S> {
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (!(o instanceof LiteralCommandNode)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof LiteralCommandNode)) {
+            return false;
+        }
 
         final LiteralCommandNode that = (LiteralCommandNode) o;
 
-        if (!literal.equals(that.literal)) return false;
+        if (!literal.equals(that.literal)) {
+            return false;
+        }
         return super.equals(o);
     }
 

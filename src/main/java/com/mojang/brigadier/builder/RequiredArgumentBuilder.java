@@ -9,6 +9,7 @@ import com.mojang.brigadier.tree.ArgumentCommandNode;
 import com.mojang.brigadier.tree.CommandNode;
 
 public class RequiredArgumentBuilder<S, T> extends ArgumentBuilder<S, RequiredArgumentBuilder<S, T>> {
+
     private final String name;
     private final ArgumentType<T> type;
     private SuggestionProvider<S> suggestionsProvider = null;
@@ -45,7 +46,8 @@ public class RequiredArgumentBuilder<S, T> extends ArgumentBuilder<S, RequiredAr
     }
 
     public ArgumentCommandNode<S, T> build() {
-        final ArgumentCommandNode<S, T> result = new ArgumentCommandNode<>(getName(), getType(), getCommand(), getRequirement(), getRedirect(), getRedirectModifier(), isFork(), getSuggestionsProvider());
+        final ArgumentCommandNode<S, T> result = new ArgumentCommandNode<>(getName(), getType(), getCommand(), getRequirement(), getRedirect(),
+            getRedirectModifier(), isFork(), getSuggestionsProvider());
 
         for (final CommandNode<S> argument : getArguments()) {
             result.addChild(argument);

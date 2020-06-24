@@ -4,6 +4,7 @@
 package com.mojang.brigadier.exceptions;
 
 public interface BuiltInExceptionProvider {
+
     Dynamic2CommandExceptionType doubleTooLow();
 
     Dynamic2CommandExceptionType doubleTooHigh();

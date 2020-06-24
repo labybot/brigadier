@@ -6,6 +6,7 @@ package com.mojang.brigadier.exceptions;
 import com.mojang.brigadier.Message;
 
 public class CommandSyntaxException extends Exception {
+
     public static final int CONTEXT_AMOUNT = 10;
     public static boolean ENABLE_COMMAND_STACK_TRACES = true;
     public static BuiltInExceptionProvider BUILT_IN_EXCEPTIONS = new BuiltInExceptions();
@@ -56,7 +57,7 @@ public class CommandSyntaxException extends Exception {
             builder.append("...");
         }
 
-        builder.append(input.substring(Math.max(0, cursor - CONTEXT_AMOUNT), cursor));
+        builder.append(input, Math.max(0, cursor - CONTEXT_AMOUNT), cursor);
         builder.append("<--[HERE]");
 
         return builder.toString();

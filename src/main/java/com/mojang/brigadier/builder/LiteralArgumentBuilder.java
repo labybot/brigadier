@@ -7,6 +7,7 @@ import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 
 public class LiteralArgumentBuilder<S> extends ArgumentBuilder<S, LiteralArgumentBuilder<S>> {
+
     private final String literal;
 
     protected LiteralArgumentBuilder(final String literal) {
@@ -28,7 +29,8 @@ public class LiteralArgumentBuilder<S> extends ArgumentBuilder<S, LiteralArgumen
 
     @Override
     public LiteralCommandNode<S> build() {
-        final LiteralCommandNode<S> result = new LiteralCommandNode<>(getLiteral(), getCommand(), getRequirement(), getRedirect(), getRedirectModifier(), isFork());
+        final LiteralCommandNode<S> result = new LiteralCommandNode<>(getLiteral(), getCommand(), getRequirement(), getRedirect(),
+            getRedirectModifier(), isFork());
 
         for (final CommandNode<S> argument : getArguments()) {
             result.addChild(argument);

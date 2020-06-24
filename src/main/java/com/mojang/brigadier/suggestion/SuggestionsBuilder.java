@@ -5,12 +5,12 @@ package com.mojang.brigadier.suggestion;
 
 import com.mojang.brigadier.Message;
 import com.mojang.brigadier.context.StringRange;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class SuggestionsBuilder {
+
     private final String input;
     private final int start;
     private final String remaining;

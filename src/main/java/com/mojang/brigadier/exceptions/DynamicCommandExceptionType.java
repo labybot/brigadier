@@ -5,10 +5,10 @@ package com.mojang.brigadier.exceptions;
 
 import com.mojang.brigadier.ImmutableStringReader;
 import com.mojang.brigadier.Message;
-
 import java.util.function.Function;
 
 public class DynamicCommandExceptionType implements CommandExceptionType {
+
     private final Function<Object, Message> function;
 
     public DynamicCommandExceptionType(final Function<Object, Message> function) {

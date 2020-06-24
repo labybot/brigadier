@@ -15,12 +15,12 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
-
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
 
 public class ArgumentCommandNode<S, T> extends CommandNode<S> {
+
     private static final String USAGE_ARGUMENT_OPEN = "<";
     private static final String USAGE_ARGUMENT_CLOSE = ">";
 
@@ -28,7 +28,8 @@ public class ArgumentCommandNode<S, T> extends CommandNode<S> {
     private final ArgumentType<T> type;
     private final SuggestionProvider<S> customSuggestions;
 
-    public ArgumentCommandNode(final String name, final ArgumentType<T> type, final Command<S> command, final Predicate<S> requirement, final CommandNode<S> redirect, final RedirectModifier<S> modifier, final boolean forks, final SuggestionProvider<S> customSuggestions) {
+    public ArgumentCommandNode(final String name, final ArgumentType<T> type, final Command<S> command, final Predicate<S> requirement,
+        final CommandNode<S> redirect, final RedirectModifier<S> modifier, final boolean forks, final SuggestionProvider<S> customSuggestions) {
         super(command, requirement, redirect, modifier, forks);
         this.name = name;
         this.type = type;
@@ -64,7 +65,8 @@ public class ArgumentCommandNode<S, T> extends CommandNode<S> {
     }
 
     @Override
-    public CompletableFuture<Suggestions> listSuggestions(final CommandContext<S> context, final SuggestionsBuilder builder) throws CommandSyntaxException {
+    public CompletableFuture<Suggestions> listSuggestions(final CommandContext<S> context, final SuggestionsBuilder builder)
+        throws CommandSyntaxException {
         if (customSuggestions == null) {
             return type.listSuggestions(context, builder);
         } else {
@@ -97,13 +99,21 @@ public class ArgumentCommandNode<S, T> extends CommandNode<S> {
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ArgumentCommandNode)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof ArgumentCommandNode)) {
+            return false;
+        }
 
         final ArgumentCommandNode that = (ArgumentCommandNode) o;
 
-        if (!name.equals(that.name)) return false;
-        if (!type.equals(that.type)) return false;
+        if (!name.equals(that.name)) {
+            return false;
+        }
+        if (!type.equals(that.type)) {
+            return false;
+        }
         return super.equals(o);
     }
 
@@ -126,6 +136,6 @@ public class ArgumentCommandNode<S, T> extends CommandNode<S> {
 
     @Override
     public String toString() {
-        return "<argument " + name + ":" + type +">";
+        return "<argument " + name + ":" + type + ">";
     }
 }

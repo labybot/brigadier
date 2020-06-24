@@ -6,11 +6,11 @@ package com.mojang.brigadier.arguments;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-
 import java.util.Arrays;
 import java.util.Collection;
 
 public class StringArgumentType implements ArgumentType<String> {
+
     private final StringType type;
 
     private StringArgumentType(final StringType type) {
@@ -31,6 +31,30 @@ public class StringArgumentType implements ArgumentType<String> {
 
     public static String getString(final CommandContext<?> context, final String name) {
         return context.getArgument(name, String.class);
+    }
+
+    public static String escapeIfRequired(final String input) {
+        for (final char c : input.toCharArray()) {
+            if (!StringReader.isAllowedInUnquotedString(c)) {
+                return escape(input);
+            }
+        }
+        return input;
+    }
+
+    private static String escape(final String input) {
+        final StringBuilder result = new StringBuilder("\"");
+
+        for (int i = 0; i < input.length(); i++) {
+            final char c = input.charAt(i);
+            if (c == '\\' || c == '"') {
+                result.append('\\');
+            }
+            result.append(c);
+        }
+
+        result.append("\"");
+        return result.toString();
     }
 
     public StringType getType() {
@@ -60,34 +84,11 @@ public class StringArgumentType implements ArgumentType<String> {
         return type.getExamples();
     }
 
-    public static String escapeIfRequired(final String input) {
-        for (final char c : input.toCharArray()) {
-            if (!StringReader.isAllowedInUnquotedString(c)) {
-                return escape(input);
-            }
-        }
-        return input;
-    }
-
-    private static String escape(final String input) {
-        final StringBuilder result = new StringBuilder("\"");
-
-        for (int i = 0; i < input.length(); i++) {
-            final char c = input.charAt(i);
-            if (c == '\\' || c == '"') {
-                result.append('\\');
-            }
-            result.append(c);
-        }
-
-        result.append("\"");
-        return result.toString();
-    }
-
     public enum StringType {
         SINGLE_WORD("word", "words_with_underscores"),
         QUOTABLE_PHRASE("\"quoted phrase\"", "word", "\"\""),
-        GREEDY_PHRASE("word", "words with spaces", "\"and symbols\""),;
+        GREEDY_PHRASE("word", "words with spaces", "\"and symbols\""),
+        ;
 
         private final Collection<String> examples;
 

@@ -4,10 +4,10 @@
 package com.mojang.brigadier.context;
 
 import com.mojang.brigadier.ImmutableStringReader;
-
 import java.util.Objects;
 
 public class StringRange {
+
     private final int start;
     private final int end;
 
