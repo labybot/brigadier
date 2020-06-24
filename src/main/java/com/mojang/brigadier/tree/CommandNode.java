@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -29,16 +30,19 @@ public abstract class CommandNode<S> implements Comparable<CommandNode<S>> {
     private final Map<String, LiteralCommandNode<S>> literals = new LinkedHashMap<>();
     private final Map<String, ArgumentCommandNode<S, ?>> arguments = new LinkedHashMap<>();
     private final Predicate<S> requirement;
+    private final String description;
     private final CommandNode<S> redirect;
     private final RedirectModifier<S> modifier;
     private final boolean forks;
     private Map<String, CommandNode<S>> children = new LinkedHashMap<>();
     private Command<S> command;
 
-    protected CommandNode(final Command<S> command, final Predicate<S> requirement, final CommandNode<S> redirect, final RedirectModifier<S> modifier,
+    protected CommandNode(final Command<S> command, final Predicate<S> requirement, final String description, final CommandNode<S> redirect,
+        final RedirectModifier<S> modifier,
         final boolean forks) {
         this.command = command;
         this.requirement = requirement;
+        this.description = description;
         this.redirect = redirect;
         this.modifier = modifier;
         this.forks = forks;
@@ -131,7 +135,7 @@ public abstract class CommandNode<S> implements Comparable<CommandNode<S>> {
             return false;
         }
 
-        final CommandNode<S> that = (CommandNode<S>) o;
+        final CommandNode<?> that = (CommandNode<?>) o;
 
         if (!children.equals(that.children)) {
             return false;
@@ -146,6 +150,10 @@ public abstract class CommandNode<S> implements Comparable<CommandNode<S>> {
 
     public Predicate<S> getRequirement() {
         return requirement;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public abstract String getName();

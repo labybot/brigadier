@@ -29,8 +29,9 @@ public class ArgumentCommandNode<S, T> extends CommandNode<S> {
     private final SuggestionProvider<S> customSuggestions;
 
     public ArgumentCommandNode(final String name, final ArgumentType<T> type, final Command<S> command, final Predicate<S> requirement,
-        final CommandNode<S> redirect, final RedirectModifier<S> modifier, final boolean forks, final SuggestionProvider<S> customSuggestions) {
-        super(command, requirement, redirect, modifier, forks);
+        final String description, final CommandNode<S> redirect, final RedirectModifier<S> modifier, final boolean forks,
+        final SuggestionProvider<S> customSuggestions) {
+        super(command, requirement, description, redirect, modifier, forks);
         this.name = name;
         this.type = type;
         this.customSuggestions = customSuggestions;
@@ -106,7 +107,7 @@ public class ArgumentCommandNode<S, T> extends CommandNode<S> {
             return false;
         }
 
-        final ArgumentCommandNode that = (ArgumentCommandNode) o;
+        final ArgumentCommandNode<?, ?> that = (ArgumentCommandNode<?, ?>) o;
 
         if (!name.equals(that.name)) {
             return false;

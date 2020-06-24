@@ -22,9 +22,10 @@ public class LiteralCommandNode<S> extends CommandNode<S> {
 
     private final String literal;
 
-    public LiteralCommandNode(final String literal, final Command<S> command, final Predicate<S> requirement, final CommandNode<S> redirect,
+    public LiteralCommandNode(final String literal, final Command<S> command, final Predicate<S> requirement, final String description,
+        final CommandNode<S> redirect,
         final RedirectModifier<S> modifier, final boolean forks) {
-        super(command, requirement, redirect, modifier, forks);
+        super(command, requirement, description, redirect, modifier, forks);
         this.literal = literal;
     }
 
@@ -88,7 +89,7 @@ public class LiteralCommandNode<S> extends CommandNode<S> {
             return false;
         }
 
-        final LiteralCommandNode that = (LiteralCommandNode) o;
+        final LiteralCommandNode<?> that = (LiteralCommandNode<?>) o;
 
         if (!literal.equals(that.literal)) {
             return false;

@@ -87,8 +87,7 @@ public class StringArgumentType implements ArgumentType<String> {
     public enum StringType {
         SINGLE_WORD("word", "words_with_underscores"),
         QUOTABLE_PHRASE("\"quoted phrase\"", "word", "\"\""),
-        GREEDY_PHRASE("word", "words with spaces", "\"and symbols\""),
-        ;
+        GREEDY_PHRASE("word", "words with spaces", "\"and symbols\""),;
 
         private final Collection<String> examples;
 

@@ -17,6 +17,7 @@ public abstract class ArgumentBuilder<S, T extends ArgumentBuilder<S, T>> {
     private final RootCommandNode<S> arguments = new RootCommandNode<>();
     private Command<S> command;
     private Predicate<S> requirement = s -> true;
+    private String description = null;
     private CommandNode<S> target;
     private RedirectModifier<S> modifier = null;
     private boolean forks;
@@ -59,6 +60,15 @@ public abstract class ArgumentBuilder<S, T extends ArgumentBuilder<S, T>> {
 
     public Predicate<S> getRequirement() {
         return requirement;
+    }
+
+    public T describes(final String description) {
+        this.description = description;
+        return getThis();
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public T redirect(final CommandNode<S> target) {
