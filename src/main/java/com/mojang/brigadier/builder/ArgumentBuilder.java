@@ -18,6 +18,7 @@ public abstract class ArgumentBuilder<S, T extends ArgumentBuilder<S, T>> {
     private Command<S> command;
     private Predicate<S> requirement = s -> true;
     private String description = null;
+    private String unmet = null;
     private CommandNode<S> target;
     private RedirectModifier<S> modifier = null;
     private boolean forks;
@@ -69,6 +70,15 @@ public abstract class ArgumentBuilder<S, T extends ArgumentBuilder<S, T>> {
 
     public String getDescription() {
         return description;
+    }
+
+    public T unmet(final String unmet) {
+        this.unmet = unmet;
+        return getThis();
+    }
+
+    public String getUnmet() {
+        return unmet;
     }
 
     public T redirect(final CommandNode<S> target) {

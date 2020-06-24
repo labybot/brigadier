@@ -29,9 +29,9 @@ public class ArgumentCommandNode<S, T> extends CommandNode<S> {
     private final SuggestionProvider<S> customSuggestions;
 
     public ArgumentCommandNode(final String name, final ArgumentType<T> type, final Command<S> command, final Predicate<S> requirement,
-        final String description, final CommandNode<S> redirect, final RedirectModifier<S> modifier, final boolean forks,
+        final String description, final String unmet, final CommandNode<S> redirect, final RedirectModifier<S> modifier, final boolean forks,
         final SuggestionProvider<S> customSuggestions) {
-        super(command, requirement, description, redirect, modifier, forks);
+        super(command, requirement, description, unmet, redirect, modifier, forks);
         this.name = name;
         this.type = type;
         this.customSuggestions = customSuggestions;
