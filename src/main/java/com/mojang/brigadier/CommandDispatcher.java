@@ -351,9 +351,6 @@ public class CommandDispatcher<S> {
         final int cursor = originalReader.getCursor();
 
         for (final CommandNode<S> child : node.getRelevantNodes(originalReader)) {
-            if (!child.canUse(source)) {
-                continue;
-            }
             final CommandContextBuilder<S> context = contextSoFar.copy();
             final StringReader reader = new StringReader(originalReader);
             try {
