@@ -36,7 +36,9 @@ public class StringReader implements ImmutableStringReader {
             || c >= 'A' && c <= 'Z'
             || c >= 'a' && c <= 'z'
             || c == '_' || c == '-'
-            || c == '.' || c == '+';
+            || c == '.' || c == '+'
+            || c == '<' || c == '>'
+            || c == '@' || c == '#';
     }
 
     @Override

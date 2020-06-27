@@ -95,6 +95,10 @@ public class CommandContext<S> {
         }
     }
 
+    public Map<String, ParsedArgument<S, ?>> getArguments() {
+        return arguments;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
