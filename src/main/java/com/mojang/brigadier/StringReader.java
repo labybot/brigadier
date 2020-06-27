@@ -38,7 +38,8 @@ public class StringReader implements ImmutableStringReader {
             || c == '_' || c == '-'
             || c == '.' || c == '+'
             || c == '<' || c == '>'
-            || c == '@' || c == '#';
+            || c == '@' || c == '#'
+            || c == '!';
     }
 
     @Override
