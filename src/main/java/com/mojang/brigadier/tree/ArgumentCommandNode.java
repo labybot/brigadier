@@ -23,6 +23,7 @@ public class ArgumentCommandNode<S, T> extends CommandNode<S> {
 
     private static final String USAGE_ARGUMENT_OPEN = "<";
     private static final String USAGE_ARGUMENT_CLOSE = ">";
+    private static final String USAGE_TYPE_DEFINITION = ": ";
 
     private final String name;
     private final ArgumentType<T> type;
@@ -48,7 +49,7 @@ public class ArgumentCommandNode<S, T> extends CommandNode<S> {
 
     @Override
     public String getUsageText() {
-        return USAGE_ARGUMENT_OPEN + name + USAGE_ARGUMENT_CLOSE;
+        return USAGE_ARGUMENT_OPEN + name + USAGE_TYPE_DEFINITION + getType().toString() + USAGE_ARGUMENT_CLOSE;
     }
 
     public SuggestionProvider<S> getCustomSuggestions() {
